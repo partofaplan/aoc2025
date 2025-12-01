@@ -8,17 +8,27 @@ def load_instructions(path):
 
 def process_instructions(steps):
     total = START
+    crossings = 0
     outputs = [total]
     for step in steps:
         direction, value = step[0], int(step[1:])
+        delta = value if direction == "R" else -value
+        if delta > 0:
+            crossings += (total + delta) // DIAL_SIZE
+        elif delta < 0:
+            crossings += (-(total + delta) + DIAL_SIZE - 1) // DIAL_SIZE
         total = total + value if direction == "R" else total - value
         total %= DIAL_SIZE 
         outputs.append(total)
-    return outputs
+    return outputs, crossings
 
 def zero_count(outputs):
     return outputs.count(0)
 
+def add_totals(crossings, outputs):
+    return (crossings + zero_count(outputs))
+
 if __name__ == "__main__":
     instructions = load_instructions("input.txt")
-    print(zero_count(process_instructions(instructions)))
+    outputs, crossings = process_instructions(instructions)
+    print(add_totals(crossings, outputs))
