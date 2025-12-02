@@ -1,4 +1,5 @@
 from pathlib import Path
+import re
 
 def expand_tokens(text):
     nums = []
@@ -13,24 +14,17 @@ def expand_tokens(text):
             nums.append(int(token))
     return nums
 
-data = Path("input.txt").read_text()
-numbers = expand_tokens(data)
+pattern = re.compile(r"(\d{1,3})\1")
+def find_repeating_numbers(numbers):
+    return [num for num in numbers if pattern.fullmatch(str(num))]
 
-def find_invalid_numbers(nums):
-    invalids = []
-    for num in nums:
-        str_num = str(num)
-        if str_num[0] == '0':
-            invalids.append(num)
-            continue
-        length = len(str_num)
-        for sub_len in range(1, length // 2 + 1):
-            if length % sub_len == 0:
-                substring = str_num[:sub_len]
-                if substring * (length // sub_len) == str_num:
-                    invalids.append(num)
-                    break
-    return invalids
+input_file = Path(__file__).parent / "input.txt"
 
-invalid_numbers = find_invalid_numbers(numbers)
-print(f"Found {len(invalid_numbers)} invalid numbers.")
+with input_file.open() as f:
+    content = f.read()
+    numbers = expand_tokens(content)
+    repeating_numbers = find_repeating_numbers(numbers)
+    print("Repeating Numbers:", repeating_numbers)
+    print("Sum:", sum(repeating_numbers))
+
+
