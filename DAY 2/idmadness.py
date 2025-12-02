@@ -20,11 +20,9 @@ def find_invalid_numbers(nums):
     invalids = []
     for num in nums:
         str_num = str(num)
-        # Check if it starts with '0'
         if str_num[0] == '0':
             invalids.append(num)
             continue
-        # Check for repeating substring pattern
         length = len(str_num)
         for sub_len in range(1, length // 2 + 1):
             if length % sub_len == 0:
