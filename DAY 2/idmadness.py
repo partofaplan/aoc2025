@@ -20,9 +20,19 @@ def find_invalid_numbers(nums):
     invalids = []
     for num in nums:
         str_num = str(num)
-        if str_num[0] == '0' or any(str_num.count(digit) > 1 for digit in set(str_num)):
+        # Check if it starts with '0'
+        if str_num[0] == '0':
             invalids.append(num)
+            continue
+        # Check for repeating substring pattern
+        length = len(str_num)
+        for sub_len in range(1, length // 2 + 1):
+            if length % sub_len == 0:
+                substring = str_num[:sub_len]
+                if substring * (length // sub_len) == str_num:
+                    invalids.append(num)
+                    break
     return invalids
 
 invalid_numbers = find_invalid_numbers(numbers)
-print(f"Invalid numbers count: {len(invalid_numbers)}")
+print(f"Found {len(invalid_numbers)} invalid numbers.")
