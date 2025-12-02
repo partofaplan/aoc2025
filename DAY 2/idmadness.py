@@ -1,5 +1,4 @@
 from pathlib import Path
-import re
 
 def expand_tokens(text):
     nums = []
@@ -14,9 +13,14 @@ def expand_tokens(text):
             nums.append(int(token))
     return nums
 
-pattern = re.compile(r"(\d{1,3})\1")
 def find_repeating_numbers(numbers):
-    return [num for num in numbers if pattern.fullmatch(str(num))]
+    def is_repeat(n: int) -> bool:
+        s = str(n)
+        if len(s) % 2:
+            return False
+        half = len(s) // 2
+        return s[:half] == s[half:]
+    return [n for n in numbers if is_repeat(n)]
 
 input_file = Path(__file__).parent / "input.txt"
 
