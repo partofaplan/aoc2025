@@ -7,7 +7,7 @@ for line in lines:
     digits = [ch for ch in line if ch.isdigit()]
     
     n = len(digits)
-    k = 12
+    k = 2
     stack = []
     to_remove = n - k
     
