@@ -7,7 +7,6 @@ DIRECTIONS = [
     (1, -1),  (1, 0),  (1, 1),
 ]
 
-
 def create_grid_from_file(file_path):
     grid = []
     with open(file_path, "r") as file:
@@ -38,14 +37,23 @@ def replace_isolated_ats(grid):
     return new_grid
 
 
+def replace_until_stable(grid):
+    """Repeat replacements until a pass makes no changes."""
+    while True:
+        updated = replace_isolated_ats(grid)
+        if updated == grid:
+            return grid
+        grid = updated
+
+
 def count_x_characters(grid):
     return sum(row.count("x") for row in grid)
 
 
 def main():
     grid = create_grid_from_file(Path(__file__).with_name("input.txt"))
-    modified_grid = replace_isolated_ats(grid)
-    print(count_x_characters(modified_grid))
+    stabilized_grid = replace_until_stable(grid)
+    print(count_x_characters(stabilized_grid))
 
 
 if __name__ == "__main__":
