@@ -1,4 +1,3 @@
-# Create a grid from the input file
 def create_grid_from_file(file_path):
     grid = []
     with open(file_path, 'r') as file:
@@ -11,7 +10,7 @@ def print_grid(grid):
         print(''.join(row))
 
 if __name__ == "__main__":
-    file_path = 'input.txt'  # Replace with your input file path
+    file_path = 'input.txt'  
     grid = create_grid_from_file(file_path)
     print_grid(grid)
 
