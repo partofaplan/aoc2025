@@ -1,29 +1,16 @@
-from pathlib import Path
+with open('input.txt', 'r') as file:
+    total = 0
+    for line in file:
+        line = line.strip()
+        if '-' in line:
+            parts = line.split('-')
+            if len(parts) == 2 and parts[0].isdigit() and parts[1].isdigit():
+                result = int(parts[1]) - int(parts[0])
+                print(result)
+                total += result
+    print("Total:", total)
 
-def main():
-    input_path = Path(__file__).with_name("input.txt")
-    ranges = []
-    numbers = []
 
-    with open(input_path, "r") as file:
-        for line in file:
-            line = line.strip()
-            if '-' in line:
-                start, end = map(int, line.split('-'))
-                ranges.append((start, end))
-            elif line.isdigit():
-                numbers.append(int(line))
 
-    count = 0
-    for number in numbers:
-        for start, end in ranges:
-            if start <= number <= end:
-                count += 1
-                break
-    print(count)
-if __name__ == "__main__":
-    main()
-
-     
-
+                
 
